@@ -41,6 +41,11 @@ namespace Automation_Challenge
 
         private static StreamWriter textWriter = new StreamWriter(fs3);
 
+        private static FileStream fs4 = new FileStream("F:\\Screenshot\\Dictionary\\Imagetext.txt", FileMode.OpenOrCreate,
+          FileAccess.Write);
+
+        private static StreamWriter imwriter = new StreamWriter(fs4);
+
 
 
         public TestContext TestContext
@@ -158,7 +163,8 @@ namespace Automation_Challenge
             {
                 invalidImageCount = 0;
                 IList<IWebElement> imagesList = driver.FindElements(By.TagName("img"));
-                TestContext.WriteLine("Total no. of images are " + imagesList.Count);
+                imwriter.Write("In "+driver.Url+Environment.NewLine);
+                imwriter.Write("Total no. of images are " + imagesList.Count+Environment.NewLine);
                 foreach (IWebElement imgElement in imagesList)
                 {
                     if (imgElement != null)
@@ -166,7 +172,7 @@ namespace Automation_Challenge
                         verifyimageActive(imgElement);
                     }
                 }
-                TestContext.WriteLine("Total no. of invalid images are " + invalidImageCount);
+                imwriter.Write("Total no. of invalid images are " + invalidImageCount+Environment.NewLine);
             }
             catch (Exception e)
             {
@@ -242,7 +248,8 @@ namespace Automation_Challenge
                 {
 					//writer2.Write(driver.FindElement(By.TagName("body")).Text);
                     //GetBodyText(driver);
-
+                    
+                    GetBrokenImage(driver);
 				    
 				}
 				catch (IOException e)
